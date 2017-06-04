@@ -1,0 +1,112 @@
+/**
+ * ====================================================================
+ * FMListToJSONArray ( key ; fmList ) — FML2JSA
+ *
+ * PURPOSE:
+ *                  Creates a JSON array in the form
+ *                                    {
+ *                                          "key": [
+ *                                                            {"key0"    : "fmLlist_value1"},
+ *                                                            {"key1"    : "fmLlist_value2"},
+ *                                                            {"key2"    : "fmLlist_value3"},
+ *                                                            {"keyN-1": "fmLlist_valueN"}
+ *                                          ]
+ *                                    }
+ *
+ *                  Given (1) a Filemaker List in the form
+ * 
+ *                                                                      
+ *                                                     List ("value1"; 
+ *                                                            "value2";
+ *                                                            "value3";
+ *                                                            "valueN")
+ * 
+ *                  and (2) a name for the Array. "key"
+ *  
+ *  
+ *                  NOTE:
+ *                            The JSONArray may be an anonymous, or unnamed, array, for example, ["fmLlist_value1", "fmLlist_value2", ….. "fmLlist_valueN"] .
+ *  
+ *                            Furthermore, the JSONArray may be Null for example, [""] .
+ *  
+ * 
+ *  
+ *  Example:
+ *		    Filemaker list 
+ *					List ( "Cat" ; "Bird" ; "IGuana" )
+ *		    Array Nam3
+ *					"Animal"
+ * 
+ *		    FML2JSA  ( "Animal" ; List ( "Cat" ; "Bird" ; "IGuana" ) )  or FML2JSA  ( "Animal" ; "Cat¶Bird¶Guana" ) )produces
+ *					{"Animal":["Cat","Bird","IGuana"]}
+ *
+ *		    which is to say a JSON Arry in the form
+ *
+ *					["Animal[0]";"Cat";JSONString];
+ *					["Animal[1]";"Bird";JSONString];
+ *					["Animal[2]";"IGuana";JSONString]
+ *
+ *                  NOTE:
+ *                            Each Filemaker ¶ indicates an array element before and an array element after.
+ *
+ *                            FML2JSA  ( "Animal" ; "Cat¶Bird¶" ) )produces
+ *					{"Animal":["Cat","Bird",""]}
+ *
+ *					or
+ *
+ *					["Animal[0]";"Cat";JSONString];
+ *					["Animal[1]";"Bird";JSONString];
+ *					["Animal[2]";"";JSONString]
+ *
+ *
+ *
+ * RETURNS:
+ *                  (quoted string array) in the form: 
+ *					{"key":["value1","value2","value3"]}, where any of the elements may be NULL ("").
+ *                  
+ * DEPENDENCIES: NONE
+ *                  
+ * NOTES:
+ *                  Create a fast (non iterating) function to convert (in place) a FMList to proper JSONArray that can be used with Javascript
+ *                  comments on seedcode blog post - "FileMaker 16 JSON Script Parameters" 
+ * RELEASE:   Michael P, Twisdale — 5/28/2017     
+ * ====================================================================
+ * 
+ */
+Let ( [
+	jtype = "JSONString" ;
+	key = Quote ( key ) ; 
+
+	vc1 = ValueCount ( fmList ) ; // ValueCount oof the List before processing
+	fmList = "\"" & Substitute (   fmList ; ¶ ; "\"¶\"" ) & "\"";
+	vc2 = ValueCount ( fmList ) ; // ValueCount oof the List after processing
+	
+	$$key_Iter = "" ;
+	$$key_Num = ValueCount ( fmList )-1 ;
+
+	type = " & " & Quote ( "\";" ) & " & " & Quote ( jtype ) & " & " & Quote ( "]" ); // Quote and add separate quoted &
+	
+	let_list_Iterator =
+		"Let ( [ $$key_Iter = If ( IsEmpty ( $$key_Iter ) ; $$key_Num ; $$key_Iter - 1 ) ] ;"   
+	& Quote ( "[" )  & key & " & \"[\" & $$key_Iter & \"]\"\";\\\"\" & " ;
+
+	let_list_Iterator_End = If ( vc1>1  or vc2>1 ; " ) ;¶"  ; " )¶" ) ;
+
+	jsonList = Evaluate ( 	
+
+
+	If ( vc1>1  or vc2>1 ; 
+		"List(¶"  ; "" ) &
+		   let_list_Iterator & Substitute (  fmList ; ¶ ;  type &  " & " & Quote ( ";" ) & let_list_Iterator_End & let_list_Iterator )  & type & let_list_Iterator_End 
+	& If ( vc1>1 or vc2>1 ; 
+		")"  ; "" ) 
+	) ;
+
+	$$key_Iter = ""		
+	] ;
+
+  Evaluate ( 	
+	"JSONSetElement(" &  Quote ( "" ) & ";" & 
+	jsonList & ")"
+  )
+)
