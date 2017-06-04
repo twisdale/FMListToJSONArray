@@ -1,5 +1,4 @@
 # FMListToJSONArray
-=======
 Purpose: Translate a Filemaker list into a proper JSON Array without iteration or recursion.
 		 In other words, this function creates a JSON array, either named or unnamed, given an Object Key and a Filemaker List.
 		 
