@@ -1,10 +1,10 @@
 # FMListToJSONArray
 
-Usage: 	 Filemaker 16 Pro, Filemaker 16 Pro Advanced, Filemaker List, JSON Array, Javascript
+Usage: 	 FileMaker 16 Pro, FileMaker 16 Pro Advanced, FileMaker List, JSON Array, Javascript
 
 
-Purpose: Translate a Filemaker 16 list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
-		 In other words, this function creates a JSON array, either named or unnamed, given a key and a Filemaker list.			 
+Purpose: Translate a FileMaker 16 list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
+		 In other words, this function creates a JSON array, either named or unnamed, given a key and a FileMaker list.			 
 
 Discussion:
 			 There is a difference between a Filmmaker list and a JSON array, which may or may not be apart of a JSON object. 
@@ -13,10 +13,10 @@ Discussion:
 			 FILEMAKER
 			 ---------
 
-			 In Filemaker, the values of a List are delimited by a Carriage return, '\r', 0x0D, which we will refer to a ("CR"). A list can be defined in three ways
+			 In FileMaker, the values of a List are delimited by a Carriage return, '\r', 0x0D, which we will refer to a ("CR"). A list can be defined in three ways
 			 1) List ("Ford"; "BMW"; "Fist")
 			 2) "Ford¶BMW¶Fiat"  (i.e. "Ford\rBMW\rFiat")
-			 these two expressions are identical to Filemaker.
+			 these two expressions are identical to FileMaker.
 			 
 			 The third way to define a list is using the value list capabilities of the system. The other lists are essentially variations of these three. 
 			 (For the purpose of this discussion, we are diliberately not going into pop or drop down menus, etc.)
@@ -26,7 +26,7 @@ Discussion:
 			 or a field
 			 	Set Field (TO:SomeField; "Ford¶BMW¶Fiat")
 			 
-			 The elements of the list can be inspected using by using Filemaker functions RightValues or LeftValues both of which which return a CR at the end of the result.
+			 The elements of the list can be inspected using by using FileMaker functions RightValues or LeftValues both of which which return a CR at the end of the result.
 			 for example, 
 				 RightValues ( "Ford¶BMW¶Fiat" ; 1 )  & "Test"  returns:
 				 Fiat
@@ -53,19 +53,19 @@ Discussion:
 				"cars":[ "Ford", "BMW", "Fiat" ]
 				}
 			 
-			 Just as Filemaker array values would be accessed by index using the function GetValue, so to are JSON array values accessed by an index using brackets, [index].
+			 Just as FileMaker array values would be accessed by index using the function GetValue, so to are JSON array values accessed by an index using brackets, [index].
 				cars[0] & "-Test #2" returns
 			 		Ford-Test #2
 					
 			index values in JSON start at 0, while in FIlemaker they start at 1.
 			
 			----------------------------------
-			Translation from Filemaker to JSON 
+			Translation from FileMaker to JSON 
 			----------------------------------
 			
-			Why is all of this important? Filemaker 16 has new native capabilities to interface with JSON / Javascript. However, there is no native function to translate a Filemake rlist into a JSON array.
+			Why is all of this important? FileMaker 16 has new native capabilities to interface with JSON / Javascript. However, there is no native function to translate a Filemake rlist into a JSON array.
 			
-			Also, Filemaker's new JSON function JSONSetElement could easily be mistaken to produce  JSON array from a Filemaker list. We would then expect
+			Also, FileMaker's new JSON function JSONSetElement could easily be mistaken to produce  JSON array from a FileMaker list. We would then expect
 			JSONListKeys and JSONListValues to produce results as if operating on JSON objects. But that is not the case. 
 			
 			For example, one might attempt to translate "Ford\rBMW\rFiat" into a JSON array by the following:
@@ -103,7 +103,7 @@ Discussion:
 				BMW
 				Fiat
 			
-			More generally, the function we want will take a Filemaker list with an arbitrary number of list vales, where the key or the values may be Null.
+			More generally, the function we want will take a FileMaker list with an arbitrary number of list vales, where the key or the values may be Null.
 			
 				JSONSetElement ( "{}";
 				[“car[0]”; GetValue(JSONTest::car; 1); JSONString] ;
@@ -133,7 +133,7 @@ Discussion:
 			
 			DOing this manually would be not only tedious but impossible if the information is arbirary.
 			
-			FMListToJSONArray is a function to automate the translation from a Filemaker list to a JSON array. 
+			FMListToJSONArray is a function to automate the translation from a FileMaker list to a JSON array. 
 			
 			It does not iterate or recurse. 
 			
@@ -181,7 +181,7 @@ Discussion:
 				outputs:
 					{"car":["Chevy BOLT","Ford","","BMW",""]}
 			
-			If we create a Filemaker list from the sparce array we get a list with three values in 'compacted' order different order, meaning that the spaces were removed:
+			If we create a FileMaker list from the sparce array we get a list with three values in 'compacted' order different order, meaning that the spaces were removed:
 				JSONListValues ( FMListToJSONArray ( "car" ; "Chevy BOLT¶Ford¶¶BMW¶" ) ; "car" )
 				outputs:
 					Chevy BOLT
@@ -203,4 +203,4 @@ Discussion:
 			
 			with a ValueCount of 5. 
 			
-			The object created using the JSON function set can be passed to a Javascript system seamlessly. It seems that this is what Filemaker developers had in mind.
+			The object created using the JSON function set can be passed to a Javascript system seamlessly. It seems that this is what FileMaker developers had in mind.
