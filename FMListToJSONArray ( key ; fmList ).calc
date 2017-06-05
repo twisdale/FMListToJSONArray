@@ -81,14 +81,14 @@ Let ( [
 	fmList = "\"" & Substitute (   fmList ; ¶ ; "\"¶\"" ) & "\"";
 	vc2 = ValueCount ( fmList ) ; // ValueCount oof the List after processing
 	
-	$$key_Iter = "" ;
-	$$key_Num = ValueCount ( fmList )-1 ;
+	$$FMLJSA_key_Iter = "" ; // add FMLJSA as a name space for globals
+	$$FMLJSA_key_Num = ValueCount ( fmList )-1 ;
 
 	type = " & " & Quote ( "\";" ) & " & " & Quote ( jtype ) & " & " & Quote ( "]" ); // Quote and add separate quoted &
 	
 	let_list_Iterator =
-		"Let ( [ $$key_Iter = If ( IsEmpty ( $$key_Iter ) ; $$key_Num ; $$key_Iter - 1 ) ] ;"   
-	& Quote ( "[" )  & key & " & \"[\" & $$key_Iter & \"]\"\";\\\"\" & " ;
+		"Let ( [ $$FMLJSA_key_Iter = If ( IsEmpty ( $$FMLJSA_key_Iter ) ; $$FMLJSA_key_Num ; $$FMLJSA_key_Iter - 1 ) ] ;"   
+	& Quote ( "[" )  & key & " & \"[\" & $$FMLJSA_key_Iter & \"]\"\";\\\"\" & " ;
 
 	let_list_Iterator_End = If ( vc1>1  or vc2>1 ; " ) ;¶"  ; " )¶" ) ;
 
@@ -102,7 +102,7 @@ Let ( [
 		")"  ; "" ) 
 	) ;
 
-	$$key_Iter = ""		
+	$$FMLJSA_key_Iter = ""		
 	] ;
 
   Evaluate ( 	
