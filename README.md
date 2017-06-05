@@ -1,15 +1,15 @@
 # FMListToJSONArray
-Purpose: Translate a Filemaker list into a proper JSON Array without iteration or recursion.
-		 In other words, this function creates a JSON array, either named or unnamed, given an Object Key and a Filemaker List.
-		 
-		 
+Purpose: Translate a Filemaker list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
+		 In other words, this function creates a JSON array, either named or unnamed, given an key and a Filemaker list.
+
+
 Discussion:
 			 There is a difference between a Filmmaker list and a JSON array, which may or may not be apart of a JSON object. 
-			 
+
 			 ---------
 			 FILEMAKER
 			 ---------
-			 
+
 			 In Filemaker, the values of a List are delimited by a Carriage return, '\r', 0x0D, which we will refer to a ("CR"). A list can be defined in three ways
 			 1) List ("Ford"; "BMW"; "Fist")
 			 2) "Ford¶BMW¶Fiat"  (i.e. "Ford\rBMW\rFiat")
@@ -44,7 +44,7 @@ Discussion:
 			 An unnamed array of the above would be given by,
 			 	[ "Ford", "BMW", "Fiat" ]
 				
-			Also, an array can be a value of an object property.			
+			Also, an array can be a value of an object property.
 				{
 				"owner":"John",
 				"cars":[ "Ford", "BMW", "Fiat" ]
