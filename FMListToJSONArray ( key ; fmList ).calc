@@ -1,6 +1,6 @@
 /**
  * ====================================================================
- * FMListToJSONArray ( key ; fmList ) — FML2JSA
+ * FMListToJSONArray ( key ; fmList )
  *
  * PURPOSE:
  *                  Creates a JSON array in the form
@@ -37,7 +37,7 @@
  *		    Array Nam3
  *					"Animal"
  * 
- *		    FML2JSA  ( "Animal" ; List ( "Cat" ; "Bird" ; "IGuana" ) )  or FML2JSA  ( "Animal" ; "Cat¶Bird¶Guana" ) )produces
+ *		    FMListToJSONArray  ( "Animal" ; List ( "Cat" ; "Bird" ; "IGuana" ) )  or FMListToJSONArray  ( "Animal" ; "Cat¶Bird¶Guana" ) )produces
  *					{"Animal":["Cat","Bird","IGuana"]}
  *
  *		    which is to say a JSON Arry in the form
@@ -49,7 +49,7 @@
  *                  NOTE:
  *                            Each Filemaker ¶ indicates an array element before and an array element after.
  *
- *                            FML2JSA  ( "Animal" ; "Cat¶Bird¶" ) )produces
+ *                            FMListToJSONArray  ( "Animal" ; "Cat¶Bird¶" ) )produces
  *					{"Animal":["Cat","Bird",""]}
  *
  *					or
