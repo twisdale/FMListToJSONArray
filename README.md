@@ -1,7 +1,10 @@
 # FMListToJSONArray
-Purpose: Translate a Filemaker list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
-		 In other words, this function creates a JSON array, either named or unnamed, given a key and a Filemaker list.
 
+Usage: 	 Filemaker 16 Pro, Filemaker 16 Pro Advanced, Filemaker List, JSON Array
+
+
+Purpose: Translate a Filemaker 16 list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
+		 In other words, this function creates a JSON array, either named or unnamed, given a key and a Filemaker list.			 
 
 Discussion:
 			 There is a difference between a Filmmaker list and a JSON array, which may or may not be apart of a JSON object. 
