@@ -162,3 +162,45 @@ Discussion:
 			The rest is obvious. 
 			
 			NOTE: the CR indicates that there is a value before the CR and one after the CR, even though it might be Null.
+			
+		-----------------------------------------
+		Differences between FMList and JSON Array
+		-----------------------------------------	
+			Using this function you can create a sparce array. For Example:
+				FMListToJSONArray ( "car" ; "¶Ford¶¶BMW¶" )
+				outputs:
+					{"car":["","Ford","","BMW",""]}
+					
+			We can then update the values in the array:
+			 
+			{"car":["Chevy BOLT","Ford","BMW",""]}
+				JSONSetElement ( FMListToJSONArray ( "car" ; "¶Ford¶¶BMW¶" ) ; "car[0]" ; "Chevy BOLT" ; JSONString ) 
+				outputs:
+					{"car":["Chevy BOLT","Ford","","BMW",""]}
+			
+			If we create a Filemaker list from the sparce array we get a list with three values in 'compacted' order different order, meaning that the spaces were removed:
+				JSONListValues ( FMListToJSONArray ( "car" ; "Chevy BOLT¶Ford¶¶BMW¶" ) ; "car" )
+				outputs:
+					Chevy BOLT
+					Ford
+					BMW
+			We can confirm this by looking at the ValueCount of the list
+				ValueCount ( JSONListValues ( FMListToJSONArray ( "car" ; "Chevy BOLT¶Ford¶¶BMW¶" ) ; "car" ) ) 
+				outputs:
+					3
+			
+			But JSONListKeys returns the entire set of keys for the array:
+				JSONListKeys ( FMListToJSONArray ( "car" ; "Chevy BOLT¶Ford¶¶BMW¶" ) ; "car" ) 
+				outputs:
+				0
+				1
+				2
+				3
+				4
+			
+			with a ValueCount of 5. 
+			
+			Filemaker name of the JSON function, JSONListValues and JSONListKeys could probably have been written with more symantic clarity as:
+				JSONListArrayValues and JSONListArrayKeys, where List is used as a verb, as in,  List the JSON Array Values or Keys.
+				
+			The object created using the JSON function set can be passed to a Javascript system seamlessly. It seems that this is what Filemaker developers had in mind.
