@@ -7,7 +7,7 @@ Purpose: Translate a FileMaker 16 list into a proper JSON Array without iterativ
 		 In other words, this function creates a JSON array, either named or unnamed, given a key and a FileMaker list.			 
 
 Discussion:
-			 There is a difference between a Filmmaker list and a JSON array, which may or may not be apart of a JSON object. 
+			 There is a difference between a FileMaker list and a JSON array, which may or may not be apart of a JSON object. 
 
 			 ---------
 			 FILEMAKER
