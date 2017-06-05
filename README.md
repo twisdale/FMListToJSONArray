@@ -1,6 +1,6 @@
 # FMListToJSONArray
 
-Usage: 	 Filemaker 16 Pro, Filemaker 16 Pro Advanced, Filemaker List, JSON Array
+Usage: 	 Filemaker 16 Pro, Filemaker 16 Pro Advanced, Filemaker List, JSON Array, Javascript
 
 
 Purpose: Translate a Filemaker 16 list into a proper JSON Array without iterative looping, a capability that custom functions do not have, or recursion.
