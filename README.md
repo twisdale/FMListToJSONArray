@@ -200,7 +200,4 @@ Discussion:
 			
 			with a ValueCount of 5. 
 			
-			Filemaker name of the JSON function, JSONListValues and JSONListKeys could probably have been written with more symantic clarity as:
-				JSONListArrayValues and JSONListArrayKeys, where List is used as a verb, as in,  List the JSON Array Values or Keys.
-				
 			The object created using the JSON function set can be passed to a Javascript system seamlessly. It seems that this is what Filemaker developers had in mind.
